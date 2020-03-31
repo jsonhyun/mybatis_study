@@ -1,5 +1,7 @@
 package mybatis_study.mappers;
 
+import java.util.List;
+
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -26,13 +28,33 @@ public class StudentMapperTest extends AbstractTest {
 	}
 
 	@Test
-	public void testSelectStudentByNO() {
+	public void test01SelectStudentByNO() {
 		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName()+"()");
 		Student student = new Student();
 		student.setStudId(1);
 		Student selectStudent = dao.selectStudentByNO(student);
 		log.debug(selectStudent.toString());
 		Assert.assertEquals(student.getStudId(), selectStudent.getStudId());
+	}
+	
+	@Test
+	public void test02SelectStudentByNOWithResultMap() {
+		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName()+"()");
+		Student student = new Student();
+		student.setStudId(1);
+		Student selectStudent = dao.selectStudentByNOWithResultMap(student);
+		log.debug(selectStudent.toString());
+		Assert.assertEquals(student.getStudId(), selectStudent.getStudId());
+	}
+	
+	@Test
+	public void test03SelectStudentByAll() {
+		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName()+"()");
+		List<Student> lists = dao.selectStudentByAll();
+		Assert.assertNotNull(lists);
+		for(Student std : lists) {
+			log.debug(std.toString());
+		}
 	}
 
 }

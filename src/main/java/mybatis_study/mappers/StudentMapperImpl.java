@@ -1,5 +1,7 @@
 package mybatis_study.mappers;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 
 import mybatis_study.dto.Student;
@@ -22,6 +24,16 @@ public class StudentMapperImpl implements StudentMapper {
 	@Override
 	public Student selectStudentByNO(Student student) {
 		return sqlSession.selectOne(namespace + ".selectStudentByNO", student);
+	}
+
+	@Override
+	public Student selectStudentByNOWithResultMap(Student student) {
+		return sqlSession.selectOne(namespace + ".selectStudentByNOWithResultMap", student);
+	}
+
+	@Override
+	public List<Student> selectStudentByAll() {
+		return sqlSession.selectList(namespace+".selectStudentByAll");
 	}
 
 }

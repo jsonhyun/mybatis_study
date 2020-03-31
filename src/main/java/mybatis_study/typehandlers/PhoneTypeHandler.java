@@ -16,7 +16,6 @@ public class PhoneTypeHandler extends BaseTypeHandler<PhoneNumber> {
 	public void setNonNullParameter(PreparedStatement ps, int i, PhoneNumber parameter, JdbcType jdbcType)
 			throws SQLException {
 		ps.setString(i, parameter.toString());
-		
 	}
 
 	@Override
@@ -33,5 +32,4 @@ public class PhoneTypeHandler extends BaseTypeHandler<PhoneNumber> {
 	public PhoneNumber getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
 		return new PhoneNumber(cs.getString(columnIndex));
 	}
-
 }
