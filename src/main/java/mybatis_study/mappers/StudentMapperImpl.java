@@ -5,22 +5,23 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import mybatis_study.dto.Student;
-import mybatis_study.jdbc.MyBatisSqlSessionFactory;
 
 public class StudentMapperImpl implements StudentMapper {
 	private static final StudentMapperImpl instance = new StudentMapperImpl();
 	
-	private String namespace = "mybatis_study.mappers.StudentMapper";
+	private final String namespace = "mybatis_study.mappers.StudentMapper";
 	private SqlSession sqlSession;
 	
-	private StudentMapperImpl() {
-		this.sqlSession = MyBatisSqlSessionFactory.openSession();
-	}
+	private StudentMapperImpl() {}
 	
 	public static StudentMapperImpl getInstance() {
 		return instance;
 	}
 	
+	public void setSqlSession(SqlSession sqlSession) {
+		this.sqlSession = sqlSession;
+	}
+
 	@Override
 	public Student selectStudentByNO(Student student) {
 		return sqlSession.selectOne(namespace + ".selectStudentByNO", student);
@@ -34,6 +35,21 @@ public class StudentMapperImpl implements StudentMapper {
 	@Override
 	public List<Student> selectStudentByAll() {
 		return sqlSession.selectList(namespace+".selectStudentByAll");
+	}
+
+	@Override
+	public int insertStudent(Student student) {
+			return sqlSession.insert(namespace + ".insertStudent", student);
+	}
+
+	@Override
+	public int deleteStudent(int id) {
+		return sqlSession.delete(namespace + ".deleteStudent", id);
+	}
+
+	@Override
+	public int updateStudent(Student student) {
+		return sqlSession.update(namespace + ".updateStudent", student);
 	}
 
 }
