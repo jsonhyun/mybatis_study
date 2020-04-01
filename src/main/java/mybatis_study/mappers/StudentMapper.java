@@ -1,6 +1,7 @@
 package mybatis_study.mappers;
 
 import java.util.List;
+import java.util.Map;
 
 import mybatis_study.dto.Student;
 
@@ -11,6 +12,10 @@ public interface StudentMapper {
 	Student selectStudentByNOWithResultMap(Student student);
 	
 	List<Student> selectStudentByAll();
+	//ResultMap
+	List<Student> selectStudentByAllForResultMap();
+	//hashMap
+	List<Map<String, Object>> selectStudentByAllForHashMap();
 	
 	int insertStudent(Student student);
 	int deleteStudent(int id);

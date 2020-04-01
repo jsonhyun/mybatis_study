@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.ibatis.session.SqlSession;
 import org.junit.AfterClass;
@@ -108,5 +110,25 @@ public class StudentMapperTest extends AbstractTest {
 		res = dao.updateStudent(student);
 		Assert.assertEquals(1, res);
 	}
-
+	
+	@Test
+	public void test07SelectStudentByAllForResultMap() {
+		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName()+"()");
+		List<Student> lists = dao.selectStudentByAllForResultMap();
+		Assert.assertNotNull(lists);
+		for(Student std : lists) {
+			log.debug(std.toString());
+		}
+	}
+	
+	@Test
+	public void test08SelectStudentByAllForHashMap() {
+		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName()+"()");
+		List<Map<String, Object>> lists = dao.selectStudentByAllForHashMap();
+		Assert.assertNotNull(lists);
+		for(Map<String, Object> map : lists) {
+			for(Entry<String, Object> e : map.entrySet())
+			log.debug(String.format("%s -> %s", e.getKey(), e.getValue()));
+		}
+	}
 }

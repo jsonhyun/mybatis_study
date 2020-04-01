@@ -1,6 +1,7 @@
 package mybatis_study.mappers;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -50,6 +51,16 @@ public class StudentMapperImpl implements StudentMapper {
 	@Override
 	public int updateStudent(Student student) {
 		return sqlSession.update(namespace + ".updateStudent", student);
+	}
+
+	@Override
+	public List<Student> selectStudentByAllForResultMap() {
+		return sqlSession.selectList(namespace + ".selectStudentByAllForResultMap");
+	}
+
+	@Override
+	public List<Map<String, Object>> selectStudentByAllForHashMap() {
+		return sqlSession.selectList(namespace + ".selectStudentByAllForHashMap");
 	}
 
 }
