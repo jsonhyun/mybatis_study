@@ -63,4 +63,9 @@ public class StudentMapperImpl implements StudentMapper {
 		return sqlSession.selectList(namespace + ".selectStudentByAllForHashMap");
 	}
 
+	@Override
+	public Student selectStudentByNOAssociation(Student student) {
+		return sqlSession.selectOne(namespace + ".selectStudentByNOAssociation", student);
+	}
+
 }

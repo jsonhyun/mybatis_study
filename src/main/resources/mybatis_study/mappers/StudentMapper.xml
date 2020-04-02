@@ -64,6 +64,16 @@
 		<result property="dob" column="dob"/>
 	</resultMap>
 	
+	<resultMap type="Student" id="StudentAssociation" extends="StudentResult">
+		<association property="address" resultMap="mybatis_study.mappers.AddressMapper.AddressResult"/>
+	</resultMap>
+	
+	<select id="selectStudentByNOAssociation" parameterType="Student" resultMap="StudentAssociation">
+		select stud_id, name, email, phone, dob, a.addr_id, street, city, state, zip, country
+		  from students s join addresses a on s.addr_id=a.addr_id
+		 where stud_id = #{studId}
+	</select>
+	
 	<select id="selectStudentByAllForResultMap" resultMap="StudentResult">
 		<include refid="selectSQL"/>
 	</select>

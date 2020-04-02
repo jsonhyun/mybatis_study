@@ -11,6 +11,8 @@ public interface StudentMapper {
 	//typeHandler를 사용하지 않음
 	Student selectStudentByNOWithResultMap(Student student);
 	
+	Student selectStudentByNOAssociation(Student student);
+	
 	List<Student> selectStudentByAll();
 	//ResultMap
 	List<Student> selectStudentByAllForResultMap();
