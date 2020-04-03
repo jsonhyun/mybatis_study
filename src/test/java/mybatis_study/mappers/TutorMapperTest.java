@@ -47,5 +47,4 @@ public class TutorMapperTest extends AbstractTest{
 			log.trace(c.toString());
 		}
 	}
-
 }

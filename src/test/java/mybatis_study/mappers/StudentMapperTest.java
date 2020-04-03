@@ -15,6 +15,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import mybatis_study.dto.Gender;
 import mybatis_study.dto.PhoneNumber;
 import mybatis_study.dto.Student;
 import mybatis_study.jdbc.AbstractTest;
@@ -140,5 +141,33 @@ public class StudentMapperTest extends AbstractTest {
 		Student selectedStd = dao.selectStudentByNOAssociation(student);
 		Assert.assertNotNull(selectedStd);
 		log.debug(selectedStd.toString());
+	}
+	
+	@Test
+	public void test10SelectStudentByNOAssociation() {
+		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName()+"()");
+		
+		Calendar newDate = GregorianCalendar.getInstance();
+		newDate.set(1990,2,28);
+		Student student = new Student();
+		student.setStudId(3);
+		student.setName("test");
+		student.setEmail("test@test.co.kr");
+		student.setDob(newDate.getTime());
+		student.setPhone(new PhoneNumber("010-1234-1234"));
+		student.setGender(Gender.FEMALE);
+		int res = dao.insertEnumStudent(student);
+		Assert.assertEquals(1, res);
+		
+		student.setStudId(4);
+		student.setName("test4");
+		student.setEmail("test4@test.co.kr");
+		student.setDob(newDate.getTime());
+		student.setPhone(new PhoneNumber("010-1234-1234"));
+		student.setGender(Gender.MALE);
+		int res1 = dao.insertEnumStudent(student);
+		Assert.assertEquals(1, res1);
+//		dao.deleteStudent(3);
+//		dao.deleteStudent(4);
 	}
 }

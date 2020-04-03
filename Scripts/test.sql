@@ -15,3 +15,6 @@ select stud_id, name, email, dob, phone,
  from students where stud_id =1;
  
 select stud_id as studId, name, email, phone, dob from students;
+
+alter table students add gender tinyint unsigned;
+alter table students modify gender tinyint(1) unsigned;
