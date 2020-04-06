@@ -33,6 +33,27 @@
 		<result column="l" property="phone.number"/>
 	</resultMap>
 	
+	<resultMap type="Student" id="StudentGenderResult" extends="StudentResult">
+		<result property="gender" column="gender"/>
+	</resultMap>
+	
+	<!-- 여러 개의 입력 파라미터 전달 -->
+	<select id="selectAllStudentByMap" parameterType="map" resultMap="StudentGenderResult">
+		select stud_id, name, email, phone, dob, gender from students
+		<where>
+			<if test="name != null">
+				name = #{name}
+			</if>
+			<if test="email != null">
+				AND email = #{email}
+			</if>
+		</where>
+	</select>
+	<!-- ResultSet 처리방식의 재정의 -->
+	<select id="selectStudentForMap" parameterType="int" resultMap="StudentGenderResult">
+		select stud_id, name from students where stud_id = #{studId}
+	</select>
+	
 	<select id="selectStudentByNOWithResultMap" parameterType="Student" resultMap="stdResult">
 		select stud_id, name, email, dob, phone,
 			   substring(phone, 1, 3) as f,
