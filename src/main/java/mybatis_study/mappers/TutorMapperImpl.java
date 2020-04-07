@@ -25,4 +25,14 @@ private static final TutorMapperImpl instance = new TutorMapperImpl();
 		return sqlSession.selectOne(namespace + ".selectTutorByTutorId", tutor);
 	}
 
+	@Override
+	public int insertTutor(Tutor tutor) {
+		return sqlSession.insert(namespace+".insertTutor", tutor);
+	}
+
+	@Override
+	public int deleteTutor(Tutor tutor) {
+		return sqlSession.delete(namespace+".deleteTutor", tutor);
+	}
+
 }

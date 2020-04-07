@@ -8,4 +8,93 @@
 		<result property="startDate" column="start_date"/>
 		<result property="endDate" column="end_date"/>
 	</resultMap>
+	<sql id="selectSQL">
+		select * from courses
+	</sql>
+	<sql id="whereSQL">
+		<where>
+			<if test="tutorId != null">
+				and tutor_id = #{tutorId}
+			</if>
+			<if test="courseName != null">
+				and name like #{courseName}
+			</if>
+			<if test="startDate != null">
+				and start_date &gt;= #{startDate}
+			</if>
+			<if test="endDate != null">
+				and end_date &lt;= #{endDate}
+			</if>
+		</where>
+	</sql>
+	<select id="selectCoursesByCondition" parameterType="hashmap" resultMap="CourseResult">
+		<include refid="selectSQL"/>
+		<include refid="whereSQL"/>
+	</select>
+	<select id="selectCaseCourses" parameterType="hashmap" resultMap="CourseResult">
+		<include refid="selectSQL"/>
+		<choose>
+			<when test="searchBy == 'Tutor'">
+				where tutor_id = #{tutorId}
+			</when>
+			<when test="searchBy == 'CourseName'">
+				where name like #{courseName}
+			</when>
+			<otherwise>
+				where end_date &gt; = now()
+			</otherwise>
+		</choose>
+	</select>
+	<select id="selectWhereCourses" parameterType="map" resultMap="CourseResult">
+		<include refid="selectSQL"/>
+		<include refid="whereSQL"/>
+	</select>
+	<select id="selectTrimCourses" parameterType="map" resultMap="CourseResult">
+		<include refid="selectSQL"/>
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="tutorId != null">
+				tutor_id = #{tutorId}
+			</if>
+			<if test="courseName != null">
+				and name like #{courseName}
+			</if>
+		</trim>
+	</select>
+	<select id="selectCoursesForeachByTutors" parameterType="map" resultMap="CourseResult">
+		<include refid="selectSQL"/>
+		<if test="tutorIds != null">
+			<where>
+				tutor_id IN
+				<foreach item="tutorId" collection="tutorIds" index="index" open="(" close=")" separator=",">
+					#{tutorId}
+				</foreach>
+			</where>
+		</if>
+	</select>
+	<insert id="insertCourses" parameterType="map">
+		insert into courses(course_id, name, description, start_date, end_date, tutor_id) values
+		<foreach item="item" collection="tutors" separator="," index="index">
+			(#{item.courseId}, #{item.name}, #{item.description}, #{item.startDate}, #{item.endDate}, #{item.tutorId})
+		</foreach>
+	</insert>
+	<delete id="deleteCourses" parameterType="map">
+		delete from courses
+		<if test="courseIds != null">
+			<where>
+				course_id IN
+				<foreach item="courseId" collection="courseIds" index="index" open="(" close=")" separator=",">
+					#{courseId}
+				</foreach>
+			</where>
+		</if>
+	</delete>
+	<insert id="insertCourse" parameterType="Course">
+		insert into courses(course_id, name, description, start_date, end_date, tutor_id)
+		values(#{courseId}, #{name}, #{description}, #{startDate}, #{endDate}, #{tutorId})
+	</insert>
+	
+	<delete id="deleteCourse" parameterType="int">
+		delete from courses where course_id=#{courseId}
+	</delete>
+	
 </mapper>
