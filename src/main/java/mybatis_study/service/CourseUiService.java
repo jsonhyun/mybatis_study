@@ -11,7 +11,7 @@ public class CourseUiService {
 	private String namespace_tutor = "mybatis_study.mappers.TutorMapper";
 	
 	public void joinNewTutorAndCourse(Tutor tutor, Course course) {
-		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession(false);
 		int res = 0;
 		try {
 			res += sqlSession.insert(namespace_tutor+".insertTutor", tutor);
@@ -31,7 +31,7 @@ public class CourseUiService {
 	}
 	
 	public void removeTutorAndCourse(int tutorId, int courseId) {
-		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession(false);
 		int res = 0;
 		try {
 			res += sqlSession.delete(namespace_course+".deleteCourse", courseId);

@@ -97,4 +97,19 @@
 		delete from courses where course_id=#{courseId}
 	</delete>
 	
+	<!-- procedure -->
+	<parameterMap type="map" id="paramMap">
+		<parameter property="tutor_id" mode="IN" jdbcType="INTEGER"/>
+	</parameterMap>
+	<select id="getCourseCountByTutor" statementType="CALLABLE" parameterMap="paramMap" resultType="CourseStat">
+		{call course_total(?)}
+	</select>
+	
+	<select id="getCourseCountByTutor2" statementType="CALLABLE" parameterType="map" resultType="CourseStat">
+		{call course_total(#{tutor_id, mode=IN, jdbcType=INTEGER}) }
+	</select>
+	
+	<select id="getCourseCountByTutor3" statementType="CALLABLE" resultType="CourseStat">
+		{call course_total(#{param1, mode=IN, jdbcType=INTEGER}) }
+	</select>
 </mapper>

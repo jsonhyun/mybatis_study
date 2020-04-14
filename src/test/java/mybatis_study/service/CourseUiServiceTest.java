@@ -6,11 +6,14 @@ import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import mybatis_study.dto.Course;
 import mybatis_study.dto.Tutor;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CourseUiServiceTest {
 	private static CourseUiService service;
 	protected static final Log log = LogFactory.getLog(CourseUiServiceTest.class);
